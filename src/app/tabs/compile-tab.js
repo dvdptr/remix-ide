@@ -115,6 +115,8 @@ module.exports = class CompileTab {
       self._view.compileIcon.setAttribute('title', '')
     })
     self._components.compiler.event.register('compilationFinished', function finish (success, data, source) {
+      // forwarding the event to the appManager infra
+      self.event.emit('compilationFinished', success, data, source)
       if (self._view.compileIcon) {
         const compileTab = document.querySelector('.compileView')
         compileTab.style.color = styles.colors.black
@@ -184,6 +186,13 @@ module.exports = class CompileTab {
         self.runCompiler()
       }
     })
+  }
+  profile () {
+    return {
+      type: 'solidityCompile',
+      methods: {},
+      events: ['compilationFinished']
+    }
   }
   addWarning (msg, settings) {
     const self = this

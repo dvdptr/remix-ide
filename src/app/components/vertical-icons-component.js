@@ -9,14 +9,7 @@ const styles = styleguide.chooser()
   // Component
   class VerticalIconComponent {
   
-    constructor(appManager) {
-      this.appManager = appManager
-      appManager.event.register('activated', (item) => {
-        this.addIcon(item)
-      })
-      appManager.event.register('deactivated', (item) => {
-        this.removeIcon(item)
-      })
+    constructor() {
     }
   
     addIcon (item) {
@@ -27,10 +20,15 @@ const styles = styleguide.chooser()
 
     }
 
+    _iconClick (event) {
+      // called when an icon has been clicked
+      this.event.emit('showContent', event.target.name)
+    }
+
     render() {
         yo`
           <div id='plugins' class=${css.plugins} >
-            <h3>example</h3>
+            <h3>example</h3>${this._iconClick}
           </div>
         `
     }

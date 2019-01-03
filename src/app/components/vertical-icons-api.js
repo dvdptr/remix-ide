@@ -8,17 +8,17 @@ const styles = styleguide.chooser()
 // API
 class VerticalIconsApi {
 
-  constructor(verticalIconsComponent, pluginManagerApi) {
-    pluginManagerApi.event.on('activate', (module) => verticalIconsComponent.addIcon(module) )
+  constructor(verticalIconsComponent, pluginManagerComponent) {
     this.component = verticalIconsComponent
+    pluginManagerComponent.event.on('internalActivated', (mod, content) => verticalIconsComponent.addIcon(mod.name, content) )
   }
 
-  addIcon(icon) {
-    this.component.event.trigger('addIcon', icon)
+  add(moduleName, icon) {
+    this.component.addIcon(moduleName, icon)
   }
 
   removeIcon(icon) {
-    this.component.event.trigger('removeIcon', icon)
+    this.component.removeIcon(icon)
   }
 }
 module.exports = VerticalIconsApi
